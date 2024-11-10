@@ -20,18 +20,42 @@ cd - a/b <relative path>
     | - a/\*\/b can have '*' in both relative and absolute path
 
 ls - list all with current path
-[TODO]: lsAll - list all recursively from current path
-[TODO]: lsFileSystem - pretty print from root
+
+printdir - list all recursively from current path
+
+printfilesystem - pretty print from root
+
 */
 
 // assuming only folders
 class FileSystem{
 	Folder *root, *cur;
+
+	string prettyPrint(Folder *f, int tabs=0) {
+		if(f==NULL) return "";
+
+		stringstream out;
+
+		string fname = f==root?"/":f->Name();
+		for(int i=0;i<tabs;i++) out<<"|\t";
+		out<<"-"<<" "<<fname; out<<"\n";
+		
+		vector<Folder*> subfolders= f->ListSubFolders();
+		for(Folder *subf: subfolders) {
+			string subout = prettyPrint(subf, tabs+1);
+			out<<subout;
+		}
+
+		return out.str();
+	}
+
 public:
 	FileSystem() {
 		root = cur = new Folder("");
 	}
 
+	// true -> created directory
+	// false -> error creating directory
 	bool mkdir(string pathstr) {
 		if(pathstr=="") return false;
 		vector<string> path = utils::parsePaths(pathstr);
@@ -64,6 +88,7 @@ public:
 		return true;
 	}
 
+	// print working directory
 	void pwd() {
 		Folder *f= cur;
 		vector<string> out;
@@ -76,20 +101,31 @@ public:
 		cout<<"\n";
 	}
 
+	// list all folders
 	void ls() {
 		vector<Folder*> v = this->cur->ListSubFolders();
 		for(Folder *f: v) cout<<f->Name()<<"\t";
 		cout<<"\n";
 	}
+
+	// pretty print current directory
+	void printdir() {
+		cout<<this->prettyPrint(this->cur);
+	}
+
+	// pretty print root
+	void printfilesystem() {
+		cout<<this->prettyPrint(this->root);
+	}
+
 };
 
+
 /*
-
---- /	- a 
-			- c
-    |	- b
-    		- d
-
+--- / - a 
+    |   | - a/c
+    | - b
+    |   | - b/d
 */
 
 signed main() {
@@ -115,6 +151,7 @@ signed main() {
 	fs->cd(".."); fs->pwd();
 	fs->cd("b"); fs->pwd();
 	fs->ls();
+	fs->printfilesystem();
 
 	return 0;
 }
