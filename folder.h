@@ -60,6 +60,7 @@ public:
 		int n= path.size();
 		// folder name cannot be '..'
 		if(path[n-1]=="..") return false;
+		else if(path[n-1]==".") return false;
 		
 		pair<Folder*, bool> par = getSubFolder(path, idx, n-1);
 		if(par.first==NULL) return false;
@@ -78,6 +79,7 @@ public:
 		int n= path.size();
 		// folder name cannot be '..'
 		if(path[n-1]=="..") return false;
+		else if(path[n-1]==".") return false;
 		
 		pair<Folder*, bool> par = getSubFolder(path, idx, n-1);
 		if(par.first==NULL) return false;
@@ -104,6 +106,8 @@ public:
 		if(path[idx]=="..") {
 			if(this->parent == NULL) return {NULL, false};
 			return this->parent->getSubFolder(path, idx+1, n);
+		}else if(path[idx]==".") {
+			return this->getSubFolder(path, idx+1, n);
 		}
 
 		bool isMultiple= false;
