@@ -16,7 +16,7 @@ pwd - print current working directory
 
 printdir - list all recursively from current path
 
-printfilesystem - pretty print from root
+printdisk - pretty print from root
 
 */
 
@@ -107,7 +107,7 @@ public:
 	}
 
 	// pretty print root
-	void printfilesystem() {
+	void printdisk() {
 		cout<<this->prettyPrint(this->root);
 	}
 

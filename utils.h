@@ -4,13 +4,28 @@ using namespace std;
 class utils{
 public:
 	static vector<string> parsePaths(string pathstr) {
-		string str;
-		stringstream ss(pathstr);
-		vector<string> path;
-		
-		while(getline(ss, str, '/')) {
-			path.push_back(str);
-		}
-		return path;
+		return splitString(pathstr, '/');
 	}
+
+	static vector<string> splitString(string str, char del) {
+		string curstr;
+		vector<string> v;
+		stringstream ss(str);
+		
+		while(getline(ss, curstr, del)) {
+			v.push_back(curstr);
+		}
+
+		return v;
+	}
+
+	static string truncateTrailingSpace(string str) {
+		int x= str.length()-1;
+		while(x>=0) {
+			if(str[x]!=' ') break;
+			x--;
+		}
+		return string(str, 0, x+1);
+	}
+
 };
