@@ -22,6 +22,7 @@ printdisk - pretty print from root
 
 // assuming only folders
 class FileSystem{
+	string rootName = "/";
 	Folder *root, *cur;
 
 	string prettyPrint(Folder *f, int tabs=0) {
@@ -109,6 +110,11 @@ public:
 	// pretty print root
 	void printdisk() {
 		cout<<this->prettyPrint(this->root);
+	}
+
+	string getCurrentDir() {
+		if(cur == root) return rootName;
+		return cur->Name();
 	}
 
 };
