@@ -18,13 +18,9 @@ const int mod = 1e9+7;
     |   | - b/d
 */
 
-signed main() {
-	fastIO;
-	/*
-	[TODO]: create an input stream
-	*/
-
+void example() {
 	FileSystem *fs = new FileSystem();
+
 	fs->ls();
 	fs->mkdir("/a");
 	fs->mkdir("b");
@@ -42,6 +38,34 @@ signed main() {
 	fs->cd("b"); fs->pwd();
 	fs->ls();
 	fs->printfilesystem();
+}
+
+// readme outputs documentation on how to use terminal
+void readme() {
+	cout<<"################### how to use terminal ###################\n";
+	int functions =0;
+	string readme = "\n" + to_string(++functions) + ". help : to output documentation\n";
+		readme+= to_string(++functions) + ". mkdir <param path of folder> : make a directory\n";
+		readme+= to_string(++functions) + ". cd <param path of folder> : change path to the specified directory\n";
+		readme+= to_string(++functions) + ". ls : list directory\n";
+		readme+= to_string(++functions) + ". pwd - print current working directory\n";
+		readme+= to_string(++functions) + ". printdir : print all folders with in the current directory\n";
+		readme+= to_string(++functions) + ". printfilesystem : print all folders from root directory\n";
+	cout<<readme<<"\n";
+	cout<<"################### ----------------- ###################\n";
+	
+}
+
+signed main() {
+	fastIO;
+
+	FileSystem *fs = new FileSystem();
+	cout<<"\n\n[WTF]\nwelcome to funny-terminal\n\n";
+	readme();
+	while(true) {
+		example();
+		break;
+	}
 
 	return 0;
 }

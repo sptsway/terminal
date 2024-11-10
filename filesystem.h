@@ -5,13 +5,14 @@ using namespace std;
 
 mkdir - a/b <relative path>
     | - /a/b/c <absolute path>
-    | - can not have '*' while mkdir
 
 cd - a/b <relative path>
     | - /a/b/c <absolute path>
     | - a/\*\/b can have '*' in both relative and absolute path
 
 ls - list all with current path
+
+pwd - print current working directory
 
 printdir - list all recursively from current path
 
