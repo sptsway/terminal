@@ -113,6 +113,8 @@ public:
 
 	// list all folders
 	void ls() {
+		cout<<".\t";
+		if(cur != root) cout<<"..\t";
 		vector<Folder*> v = this->cur->ListSubFolders();
 		for(Folder *f: v) cout<<f->Name()<<"\t";
 		cout<<"\n";
