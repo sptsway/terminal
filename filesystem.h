@@ -63,6 +63,22 @@ public:
 		return noerr;
 	}
 
+	// true -> removed directory
+	// false -> error removing directory
+	// assumes deletes are recursive
+	bool rm(string pathstr) {
+		if(pathstr=="") return false;
+		vector<string> path = utils::parsePaths(pathstr);
+
+		bool noerr;
+		// case of absolute path
+		// indx0 will be root, so start from 1
+		if(path[0]=="") noerr= root->deleteSubFolder(path, 1); 
+		else noerr = cur->deleteSubFolder(path, 0);
+
+		return noerr;
+	}
+
 	// true -> changed cur path
 	// false -> error changing cur path
 	bool cd(string pathstr) {

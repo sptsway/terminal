@@ -45,6 +45,7 @@ void readme() {
 	int functions =0;
 	string readme = "\n" + to_string(++functions) + ". help : to output documentation\n";
 		readme+= to_string(++functions) + ". mkdir <param path of folder> : make a directory\n";
+		readme+= to_string(++functions) + ". rm <param path of folder> : remove a directory recursively\n";
 		readme+= to_string(++functions) + ". cd <param path of folder> : change path to the specified directory\n";
 		readme+= to_string(++functions) + ". ls : list directory\n";
 		readme+= to_string(++functions) + ". pwd - print current working directory\n";
@@ -82,11 +83,13 @@ bool interact(string inp, FileSystem *fs) {
 		if(inpv[0]=="cd") {
 			if(fs->cd(inpv[1])) cout<<"✅ changed directory\n";
 			else cout<<"❌ error changing directory\n";
-		}
-		else if(inpv[0]=="mkdir") {
+		} else if(inpv[0]=="mkdir") {
 			if(fs->mkdir(inpv[1])) cout<<"✅ created directory\n";
 			else cout<<"❌ error creating directory\n";
-		}else wrongIn();
+		} else if(inpv[0]=="rm") {
+			if(fs->rm(inpv[1])) cout<<"✅ removed directory\n";
+			else cout<<"❌ error removing directory\n";
+		} else wrongIn();
 		break;
 	default:
 		wrongIn();
