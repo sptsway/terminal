@@ -12,17 +12,19 @@ class Folder{
 	vector<Folder*> subfolders;
 
 public:
+	// construct <used for root initialisation>
 	Folder(string name) {
 		this->name= name;
 		parent=NULL;
 	}
 
+	// constructor for initialisation
 	Folder(string name, Folder *par) {
 		this->name= name;
 		this->parent=par;
 	}
 
-	// returns if folder was added successfully of not
+	// returns true if folder was added successfully or not
 	bool createSubFolder(vector<string> &path, int idx) {
 		int n= path.size();
 		// folder name cannot be '..'
