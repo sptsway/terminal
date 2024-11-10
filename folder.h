@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-
 /*
 [TODO] - add file handling
 [TODO] - rename to directory
