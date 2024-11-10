@@ -31,6 +31,12 @@ class Folder{
 		subfolders.clear();
 	}
 
+	// return true if subfolder with given name is present 
+	bool isSubFPresent(string fname) {
+		for(Folder *f: subfolders) if(f->name == fname) return true;
+		return false;
+	}
+
 public:
 	// construct <used for root initialisation>
 	Folder(string name) {
@@ -58,6 +64,8 @@ public:
 		pair<Folder*, bool> par = getSubFolder(path, idx, n-1);
 		if(par.first==NULL) return false;
 		if(par.second) return false;
+
+		if(par.first->isSubFPresent(path[n-1])) return false;
 
 		Folder *newFolder = new Folder(path[n-1], par.first);
 		par.first->subfolders.push_back(newFolder);
