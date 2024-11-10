@@ -55,6 +55,10 @@ void readme() {
 	
 }
 
+void printDirHead(FileSystem *fs) {
+	cout<<"wtf 1.1> ";
+}
+
 bool interact(string inp, FileSystem *fs) {
 	inp=utils::truncateTrailingSpace(inp);
 
@@ -97,12 +101,14 @@ signed main() {
 	FileSystem *fs = new FileSystem();
 	cout<<"\n\n☺☺☺☺☺☺☺☺[WTF]☺☺☺☺☺☺☺☺\nwelcome to funny-terminal\n\n";
 	readme(); cout.flush();
+	printDirHead(fs); cout.flush();
 	
 	while(true) {
 		
 		string inp;
 		getline(cin, inp);
 		if(!interact(inp, fs)) break;
+		printDirHead(fs);
 		cout.flush();
 	}
 
