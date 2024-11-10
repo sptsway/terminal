@@ -56,7 +56,7 @@ void readme() {
 }
 
 void printDirHead(FileSystem *fs) {
-	cout<<"wtf 1.1> ";
+	cout<<"wtf1.1$ "<<fs->getCurrentDir()<<" > " ;
 }
 
 bool interact(string inp, FileSystem *fs) {
