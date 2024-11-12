@@ -70,6 +70,8 @@ bool interact(string inp, FileSystem *fs) {
 	vector<string> inpv = utils::splitString(inp, ' ');
 
 	switch(inpv.size()) {
+	case 0:
+		return true;
 	case 1:
 		if(inpv[0] == "help") readme();
 		else if(inpv[0] == "ls") fs->ls();
