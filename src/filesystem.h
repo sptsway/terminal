@@ -20,22 +20,22 @@ printdisk - pretty print from root
 
 */
 
-// assuming only folders
+// assuming only Directories
 class FileSystem{
 	string rootName = "/";
-	Folder *root, *cur;
+	Directory *root, *cur;
 
-	string prettyPrint(Folder *f, int tabs=0) {
-		if(f==NULL) return "";
+	string prettyPrint(Directory *d, int tabs=0) {
+		if(d==NULL) return "";
 
 		stringstream out;
 
-		string fname = f==root?"/":f->Name();
+		string dname = d==root?"/":d->Name();
 		for(int i=0;i<tabs;i++) out<<"|\t";
-		out<<"-"<<" "<<fname; out<<"\n";
+		out<<"-"<<" "<<dname; out<<"\n";
 		
-		vector<Folder*> subfolders= f->ListSubFolders();
-		for(Folder *subf: subfolders) {
+		vector<Directory*> subDirectories= d->ListSubDirs();
+		for(Directory *subf: subDirectories) {
 			string subout = prettyPrint(subf, tabs+1);
 			out<<subout;
 		}
@@ -45,7 +45,7 @@ class FileSystem{
 
 public:
 	FileSystem() {
-		root = cur = new Folder("");
+		root = cur = new Directory("");
 	}
 
 	// true -> created directory
@@ -57,8 +57,8 @@ public:
 		bool noerr;
 		// case of absolute path
 		// indx0 will be root, so start from 1
-		if(path[0]=="") noerr= root->createSubFolder(path, 1); 
-		else noerr = cur->createSubFolder(path, 0);
+		if(path[0]=="") noerr= root->createSubDirectory(path, 1); 
+		else noerr = cur->createSubDirectory(path, 0);
 
 		return noerr;
 	}
@@ -73,8 +73,8 @@ public:
 		bool noerr;
 		// case of absolute path
 		// indx0 will be root, so start from 1
-		if(path[0]=="") noerr= root->deleteSubFolder(path, 1); 
-		else noerr = cur->deleteSubFolder(path, 0);
+		if(path[0]=="") noerr= root->deleteSubDirectory(path, 1); 
+		else noerr = cur->deleteSubDirectory(path, 0);
 
 		return noerr;
 	}
@@ -85,11 +85,11 @@ public:
 		if(pathstr=="") return false;
 		vector<string> path = utils::parsePaths(pathstr);
 
-		pair<Folder*, bool> updatedCur;
+		pair<Directory*, bool> updatedCur;
 		// case of absolute path
 		// indx0 will be root, so start from 1
-		if(path[0]=="") updatedCur= root->getSubFolder(path, 1, path.size()); 
-		else updatedCur = cur->getSubFolder(path, 0, path.size());
+		if(path[0]=="") updatedCur= root->getSubDirectory(path, 1, path.size()); 
+		else updatedCur = cur->getSubDirectory(path, 0, path.size());
 
 		if(updatedCur.first==NULL) return false;
 		if(updatedCur.second) return false;
@@ -100,23 +100,23 @@ public:
 
 	// print working directory
 	void pwd() {
-		Folder *f= cur;
+		Directory *d= cur;
 		vector<string> out;
-		while(f != root) {
-			out.push_back(f->Name());
-			f= f->Parent();
+		while(d != root) {
+			out.push_back(d->Name());
+			d= d->Parent();
 		}
 		cout<<"/";
 		for(int i=out.size()-1;i>=0;i--) cout<<out[i]<<"/";
 		cout<<"\n";
 	}
 
-	// list all folders
+	// list all Directories
 	void ls() {
 		cout<<".\t";
 		if(cur != root) cout<<"..\t";
-		vector<Folder*> v = this->cur->ListSubFolders();
-		for(Folder *f: v) cout<<f->Name()<<"\t";
+		vector<Directory*> v = this->cur->ListSubDirs();
+		for(Directory *d: v) cout<<d->Name()<<"\t";
 		cout<<"\n";
 	}
 
