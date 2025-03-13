@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 #include "utils.h"
-#include "folder.h"
-#include "fileSystem.h"
+#include "directory.h"
+#include "filesystem.h"
 using namespace std;
 
 #define int long long
@@ -100,8 +100,15 @@ bool interact(string inp, FileSystem *fs) {
 	return true;
 }
 
-signed main() {
+signed main(int32_t argc, char* argv[]) {
 	fastIO;
+
+	// parse args
+	if(argc>0) {
+		for(int i=0;i<argc;i++) {
+			if(string(argv[i]) == "--example\0") example();
+		}
+	}
 
 	FileSystem *fs = new FileSystem();
 	cout<<"\n\n☺☺☺☺☺☺☺☺[WTF]☺☺☺☺☺☺☺☺\nwelcome to funny-terminal\n\n";
@@ -109,7 +116,6 @@ signed main() {
 	printDirHead(fs); cout.flush();
 	
 	while(true) {
-		
 		string inp;
 		getline(cin, inp);
 		if(!interact(inp, fs)) break;
