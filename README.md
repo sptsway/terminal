@@ -3,7 +3,7 @@ an in-memory filesystem implm via c++ <br>
 my terminal seemed slow, so i created my own :))
 
 #### how to start?
-1. `g++ terminal.cpp -o terminal.out`
+1. `g++ src/terminal.cpp -o terminal.out`
 2. `./terminal.out`
 
 
