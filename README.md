@@ -13,12 +13,14 @@ my terminal seemed slow, so i created my own :))
 
 1. help : to output documentation
 2. mkdir <param path of folder> : make a directory
-3. rm <param path of folder> : remove a directory recursively
-4. cd <param path of folder> : change path to the specified directory
-5. ls : list directory
-6. pwd - print current working directory
-7. printdir : print all folders with in the current directory
-8. printdisk : print all folders from root directory
+3. touch <param path of file> : make a directory file
+4. rm <param path of folder> : remove a directory recursively
+5. cd <param path of folder> : change path to the specified directory
+6. ls : list directory
+7. ls-files : list directory files
+8. pwd - print current working directory
+9. printdir : print all folders with in the current directory
+10. printdisk : print all folders from root directory
 
 ################### ----------------- ###################
 ```
