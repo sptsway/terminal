@@ -6,11 +6,16 @@ using namespace std;
 mkdir - a/b <relative path>
     | - /a/b/c <absolute path>
 
+touch - a/b.txt <relative path>
+	| - /a/b/c.txt <absolute path>
+
 cd - a/b <relative path>
     | - /a/b/c <absolute path>
     | - a/\*\/b can have '*' in both relative and absolute path
 
 ls - list all with current path
+
+ls-files - list all files with current path
 
 pwd - print current working directory
 
@@ -57,8 +62,23 @@ public:
 		bool noerr;
 		// case of absolute path
 		// indx0 will be root, so start from 1
-		if(path[0]=="") noerr= root->createSubDirectory(path, 1); 
-		else noerr = cur->createSubDirectory(path, 0);
+		if(path[0]=="") noerr= root->createSubDirectory(path, 1, false); 
+		else noerr = cur->createSubDirectory(path, 0, false);
+
+		return noerr;
+	}
+
+	// true -> created file
+	// false -> error creating file
+	bool touch(string pathstr) {
+		if(pathstr=="") return false;
+		vector<string> path = utils::parsePaths(pathstr);
+
+		bool noerr;
+		// case of absolute path
+		// indx0 will be root, so start from 1
+		if(path[0]=="") noerr= root->createSubDirectory(path, 1, true); 
+		else noerr = cur->createSubDirectory(path, 0, true);
 
 		return noerr;
 	}
@@ -116,7 +136,17 @@ public:
 		cout<<".\t";
 		if(cur != root) cout<<"..\t";
 		vector<Directory*> v = this->cur->ListSubDirs();
-		for(Directory *d: v) cout<<d->Name()<<"\t";
+		for(Directory *d: v) {
+			if(d->IsAFile()) cout<<"<f>";
+			cout<<d->Name()<<"\t";
+		}
+		cout<<"\n";
+	}
+
+	// list all Files
+	void lsFiles() {
+		vector<Directory*> v = this->cur->ListSubDirs();
+		for(Directory *d: v) if(d->IsAFile()) cout<<"<f>"<<d->Name()<<"\t";
 		cout<<"\n";
 	}
 

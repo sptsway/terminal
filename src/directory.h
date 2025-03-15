@@ -9,6 +9,7 @@ private:
 	string name;
 	Directory *parent;
 	vector<Directory*> subDirs;
+	bool isFile;
 
 	// returns true if subDirectory was removed successfully or not
 	bool removeFromSubDirectory(string dname) {
@@ -42,6 +43,7 @@ public:
 	Directory(string name) {
 		this->name= name;
 		parent=NULL;
+		isFile= false;
 	}
 
 	// destructor <used to destory subDirs while deleting cur Directory>
@@ -50,13 +52,15 @@ public:
 	}
 
 	// constructor for initialisation
-	Directory(string name, Directory *par) {
-		this->name= name;
-		this->parent=par;
+	Directory(string name, Directory *par, bool isFile) {
+		this->name = name;
+		this->parent = par;
+		this->isFile = isFile;
 	}
 
 	// returns true if Directory was added successfully or not
-	bool createSubDirectory(vector<string> &path, int idx) {
+	// agnostic of file/folder
+	bool createSubDirectory(vector<string> &path, int idx, bool isFile) {
 		int n= path.size();
 		
 		// Directory name cannot be '..' or '.'
@@ -69,13 +73,14 @@ public:
 
 		if(par.first->isSubDirPresent(path[n-1])) return false;
 
-		Directory *newDirectory = new Directory(path[n-1], par.first);
+		Directory *newDirectory = new Directory(path[n-1], par.first, isFile);
 		par.first->subDirs.push_back(newDirectory);
 
 		return true;
 	}
 
 	// returns true if Directory(s) was removed successfully or not
+	// agnostic of file/folder
 	bool deleteSubDirectory(vector<string> &path, int idx) {
 		int n= path.size();
 		// Directory name cannot be '..' or '.'
@@ -94,12 +99,20 @@ public:
 		return true;
 	}
 
+	// ########## input
+	// <idx,n> states the range to be traversed in the path
+	// assumes path.size()>=n
+	//
+	// ########## output
 	// returns subDirectory from Directory tree
 	// 1. <child_Directory, false> -> found single Directory
 	// 2. <child_Directory, true> -> found multiple Directorys
 	// 3. <NULL, false> -> not found
+	//
+	// assumes crawling(cd) the directories, so it does takes into account file
 	pair<Directory*, bool> getSubDirectory(vector<string> &path, int idx, int n) {
 		if(idx==path.size() || idx==n) {
+			if(this->isFile) return {NULL, false};
 			return {this, false};
 		}
 
@@ -115,6 +128,10 @@ public:
 		Directory *ans=NULL;
 
 		for(Directory *f: this->subDirs) {
+			
+			// skip if its a file
+			if(f->isFile) continue;
+
 			if(path[idx]=="*" || path[idx]==f->name) {
 				pair<Directory*, bool> p = f->getSubDirectory(path, idx+1, n);
 
@@ -129,16 +146,36 @@ public:
 		return {ans, isMultiple};
 	}
 
+	// does the directory contain the file
+	bool constainsFile(string fname) {
+		for(Directory *dir: subDirs) {
+			if(dir->name ==fname && dir->isFile) return true;
+		}
+		return false;
+	}
+
+
+/*
+Getters
+*/
+	// Name getter
 	string Name() {
 		return this->name;
 	}
 
+	// Parent
 	Directory* Parent() {
 		return this->parent;
 	}
 
+	// ListSubDirs getter
 	vector<Directory*> ListSubDirs() {
 		return this->subDirs;
+	}
+
+	// IsAFile getter
+	bool IsAFile() {
+		return this->isFile;
 	}
 
 };
