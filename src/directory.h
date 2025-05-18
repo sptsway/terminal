@@ -1,9 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-/*
-[TODO] - add file handling
-*/
 class Directory{
 private:
 	string name;
